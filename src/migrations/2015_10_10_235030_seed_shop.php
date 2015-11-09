@@ -88,6 +88,24 @@ class SeedShop extends Migration {
 						'class_controller' => '\App\Telenok\Shop\Module\Category\Controller',
                     ]
             );
+            
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Picture', 'ru' => 'Картинка'],
+                'title_list' => ['en' => 'Picture', 'ru' => 'Картинка'],
+                'key' => 'upload',
+                'code' => 'image',
+                'active' => 1,
+                'field_object_type' => 'product',
+                'field_object_tab' => 'main',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 1,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 8,
+                'text_rte' => 1,
+            ]);
         }
         finally
         {
