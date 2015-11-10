@@ -14,14 +14,14 @@ class SeedShop extends Migration {
                     ->update(['value' => 0]);
             
             (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
-                    [
-                        'title' => ['ru' => "Товар", 'en' => "Product"], 
-                        'title_list' => ['ru' => "Товар", 'en' => "Product"],
-						'code' => 'product',
-						'active' => 1,
-						'class_model' => '\App\Telenok\Shop\Model\Product',
-						'class_controller' => '\App\Telenok\Shop\Module\Product\Controller',
-                    ]
+                [
+                    'title' => ['ru' => "Товар", 'en' => "Product"], 
+                    'title_list' => ['ru' => "Товар", 'en' => "Product"],
+                    'code' => 'product',
+                    'active' => 1,
+                    'class_model' => '\App\Telenok\Shop\Model\Product',
+                    'class_controller' => '\App\Telenok\Shop\Module\Product\Controller',
+                ]
             );
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
@@ -97,14 +97,14 @@ class SeedShop extends Migration {
 
             
             (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
-                    [
-                        'title' => ['ru' => "Категория товара", 'en' => "Product category"], 
-                        'title_list' => ['ru' => "Категория товара", 'en' => "Product category"],
-						'code' => 'shop_category',
-						'active' => 1,
-						'class_model' => '\App\Telenok\Shop\Model\Category',
-						'class_controller' => '\App\Telenok\Shop\Module\Category\Controller',
-                    ]
+                [
+                    'title' => ['ru' => "Категория товара", 'en' => "Product category"], 
+                    'title_list' => ['ru' => "Категория товара", 'en' => "Product category"],
+                    'code' => 'shop_category',
+                    'active' => 1,
+                    'class_model' => '\App\Telenok\Shop\Model\Category',
+                    'class_controller' => '\App\Telenok\Shop\Module\Category\Controller',
+                ]
             );
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
