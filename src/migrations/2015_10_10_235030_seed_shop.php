@@ -141,6 +141,26 @@ class SeedShop extends Migration {
                 'allow_update' => 1,
                 'field_order' => 10,
             ]);
+            
+            // Widget group
+            (new \App\Telenok\Core\Model\Web\WidgetGroup())->storeOrUpdate([
+                'title' => ['en' => 'Shop', 'ru' => 'Магазин'],
+                'active' => 1,
+                'controller_class' => '\App\Telenok\Shop\WidgetGroup\Shop\Controller',
+            ]);
+
+            // Widget
+            (new \App\Telenok\Core\Model\Web\Widget())->storeOrUpdate([
+                'title' => ['en' => 'Category', 'ru' => 'Категория'],
+                'active' => 1,
+                'controller_class' => '\App\Telenok\Shop\Widget\Category\Controller',
+            ]);
+
+            (new \App\Telenok\Core\Model\Web\Widget())->storeOrUpdate([
+                'title' => ['en' => 'Product', 'ru' => 'Товар'],
+                'active' => 1,
+                'controller_class' => '\App\Telenok\Shop\Widget\Product\Controller',
+            ]);
         }
         finally
         {
