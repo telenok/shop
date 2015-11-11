@@ -3,7 +3,7 @@
 class Controller extends \Telenok\Core\Interfaces\Widget\Group\Controller {
 
     protected $key = 'shop';
-    protected $icon = 'fa fa-signal'; 
+    protected $icon = 'fa fa-shopping-cart'; 
 
 }
 
