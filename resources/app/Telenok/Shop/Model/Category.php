@@ -1,5 +1,5 @@
 <?php namespace App\Telenok\Shop\Model;
 
-class Category extends \Telenok\Shop\Model\Category { 
+class ProductCategory extends \Telenok\Shop\Model\ProductCategory { 
     
 }

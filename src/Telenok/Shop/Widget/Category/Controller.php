@@ -1,10 +1,10 @@
-<?php namespace Telenok\Shop\Widget\Category;
+<?php namespace Telenok\Shop\Widget\ProductCategory;
 
 class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
 
-    protected $key = 'shop-category';
+    protected $key = 'product-category';
     protected $parent = 'shop';
-	protected $defaultFrontendView = "shop::widget.category.widget-frontend";
+	protected $defaultFrontendView = "shop::widget.product-category.widget-frontend";
 
     protected $menuType = 'root';
     protected $nodeIds = [];

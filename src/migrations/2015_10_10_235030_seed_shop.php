@@ -108,11 +108,11 @@ class SeedShop extends Migration {
                 [
                     'title' => ['ru' => "Категория товара", 'en' => "Product category"], 
                     'title_list' => ['ru' => "Категория товара", 'en' => "Product category"],
-                    'code' => 'shop_category',
+                    'code' => 'product_category',
                     'active' => 1,
                     'treeable' => 1,
-                    'class_model' => '\App\Telenok\Shop\Model\Category',
-                    'class_controller' => '\App\Telenok\Shop\Module\Category\Controller',
+                    'class_model' => '\App\Telenok\Shop\Model\ProductCategory',
+                    'class_controller' => '\App\Telenok\Shop\Module\ProductCategory\Controller',
                 ]
             );
 
@@ -124,7 +124,7 @@ class SeedShop extends Migration {
                 'key' => 'string',
                 'code' => 'url_pattern',
                 'active' => 1,
-                'field_object_type' => 'shop_category',
+                'field_object_type' => 'product_category',
                 'field_object_tab' => 'main',
                 'multilanguage' => 0,
                 'show_in_form' => 1,
@@ -142,7 +142,7 @@ class SeedShop extends Migration {
                 'key' => 'upload',
                 'code' => 'image',
                 'active' => 1,
-                'field_object_type' => 'shop_category',
+                'field_object_type' => 'product_category',
                 'field_object_tab' => 'main',
                 'multilanguage' => 0,
                 'show_in_form' => 1,
@@ -159,7 +159,7 @@ class SeedShop extends Migration {
                 'key' => 'relation-many-to-many',
                 'code' => 'product',
                 'active' => 1,
-                'field_object_type' => 'shop_category',
+                'field_object_type' => 'product_category',
                 'field_object_tab' => 'main',
                 'relation_many_to_many_has' => 'product',
                 'multilanguage' => 0,
@@ -182,7 +182,7 @@ class SeedShop extends Migration {
             (new \App\Telenok\Core\Model\Web\Widget())->storeOrUpdate([
                 'title' => ['en' => 'Category', 'ru' => 'Категория'],
                 'active' => 1,
-                'controller_class' => '\App\Telenok\Shop\Widget\Category\Controller',
+                'controller_class' => '\App\Telenok\Shop\Widget\ProductCategory\Controller',
             ]);
 
             (new \App\Telenok\Core\Model\Web\Widget())->storeOrUpdate([

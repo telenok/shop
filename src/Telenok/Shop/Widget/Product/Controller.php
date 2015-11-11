@@ -2,9 +2,9 @@
 
 class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
 
-    protected $key = 'shop-product';
+    protected $key = 'product';
     protected $parent = 'shop';
-	protected $defaultFrontendView = "shop::widget.category.widget-frontend";
+	protected $defaultFrontendView = "shop::widget.product.widget-frontend";
 
     protected $menuType = 'root';
     protected $nodeIds = [];
