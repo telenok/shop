@@ -13,7 +13,13 @@ class SeedShop extends Migration {
             \App\Telenok\Core\Model\System\Setting::where('code', 'app.acl.enabled')
                     ->update(['value' => 0]);
             
-            (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
+            $folderShop = (new \App\Telenok\Core\Model\System\Folder())->storeOrUpdate([
+                'title' => ['en' => 'Shop', 'ru' => 'Магазин'],
+                'active' => 1,
+                'code' => 'shop',
+            ])->makeRoot();
+            
+            $typeProduct = (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
                 [
                     'title' => ['ru' => "Товар", 'en' => "Product"], 
                     'title_list' => ['ru' => "Товар", 'en' => "Product"],
@@ -23,6 +29,8 @@ class SeedShop extends Migration {
                     'class_controller' => '\App\Telenok\Shop\Module\Product\Controller',
                 ]
             );
+            
+            $typeProduct->makeLastChildOf($folderShop);
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
                 'title' => ['en' => 'Url', 'ru' => 'Url'],
@@ -96,7 +104,7 @@ class SeedShop extends Migration {
             ]);
 
             
-            (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
+            $shopCategory = (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
                 [
                     'title' => ['ru' => "Категория товара", 'en' => "Product category"], 
                     'title_list' => ['ru' => "Категория товара", 'en' => "Product category"],
@@ -108,6 +116,8 @@ class SeedShop extends Migration {
                 ]
             );
 
+            $shopCategory->makeLastChildOf($folderShop);
+            
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
                 'title' => ['en' => 'Url', 'ru' => 'Url'],
                 'title_list' => ['en' => 'Url', 'ru' => 'Url'],
