@@ -51,6 +51,23 @@ class SeedShop extends Migration {
             ]);
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Price', 'ru' => 'Цена'],
+                'title_list' => ['en' => 'Price', 'ru' => 'Цена'],
+                'key' => 'decimal',
+                'code' => 'price',
+                'active' => 1,
+                'field_object_type' => 'product',
+                'field_object_tab' => 'main',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 1,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 4,
+            ]);
+
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
                 'title' => ['en' => 'Announcement', 'ru' => 'Анонс'],
                 'title_list' => ['en' => 'Announcement', 'ru' => 'Анонс'],
                 'key' => 'text',
@@ -154,6 +171,42 @@ class SeedShop extends Migration {
             ]);
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Announcement', 'ru' => 'Анонс'],
+                'title_list' => ['en' => 'Announcement', 'ru' => 'Анонс'],
+                'key' => 'text',
+                'code' => 'description_short',
+                'active' => 1,
+                'field_object_type' => 'product_category',
+                'field_object_tab' => 'main',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 1,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 7,
+                'text_rte' => 1,
+            ]);
+
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Description', 'ru' => 'Описание'],
+                'title_list' => ['en' => 'Description', 'ru' => 'Описание'],
+                'key' => 'text',
+                'code' => 'description',
+                'active' => 1,
+                'field_object_type' => 'product_category',
+                'field_object_tab' => 'main',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 1,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 8,
+                'text_rte' => 1,
+            ]);
+            
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
                 'title' => ['en' => 'Product', 'ru' => 'Товар'],
                 'title_list' => ['en' => 'Product', 'ru' => 'Товар'],
                 'key' => 'relation-many-to-many',
@@ -189,6 +242,12 @@ class SeedShop extends Migration {
                 'title' => ['en' => 'Product', 'ru' => 'Товар'],
                 'active' => 1,
                 'controller_class' => '\App\Telenok\Shop\Widget\Product\Controller',
+            ]);
+
+            (new \App\Telenok\Core\Model\Web\Widget())->storeOrUpdate([
+                'title' => ['en' => 'Product List', 'ru' => 'Список товаров'],
+                'active' => 1,
+                'controller_class' => '\App\Telenok\Shop\Widget\ProductList\Controller',
             ]);
         }
         finally
