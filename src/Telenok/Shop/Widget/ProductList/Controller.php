@@ -88,7 +88,7 @@ class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
 	{
         $productModel = app('\App\Telenok\Shop\Model\Product');
         
-        $query = $productModel->withPermission();
+        $query = $productModel->withPermission()->with('productShowInProductCategory');
         
         if ($catIds = $this->getCategoryIds())
         {
@@ -101,31 +101,24 @@ class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
                     ->whereIn($productCategoryModel->getTable() . '.id', $ids)
                     ->lists('id');
 
-            $query->with(['productProductCategory' => function($query) use ($categoryIds)
+            $query->whereHas('productProductCategory', function($query) use ($categoryIds)
             {
                 $query->whereIn('id', $categoryIds);
-            }]);
+            });
         }
         else if ($catUrl = $this->getShopCategoryUrlPattern())
         {
-            $query->with(['productProductCategory' => function($query) use ($catUrl)
+            $query->whereHas('productProductCategory', function($query) use ($catUrl)
             {
                 $query->where('url_pattern', $catUrl);
-            }]);
+            });
         }
-
+        
         if (($orderBy = $this->getOrderBy()) == 'title')
         {
-            $translateModel = app('\App\Telenok\Core\Model\Object\Translation');
+            $query->translateField($query, $productModel->getTable(), 'translate_table', 'title', config('app.locale'));
 
-            $query->leftJoin($translateModel->getTable(), function($join) use ($productModel, $translateModel)
-            {
-                $join   ->on($productModel->getTable().'.id', '=', $translateModel->getTable().'.translation_object_model_id')
-                        ->on($translateModel->getTable().'.translation_object_field_code', '=', \DB::raw("'title'"))
-                        ->on($translateModel->getTable().'.translation_object_language', '=', \DB::raw("'".config('app.locale')."'"));
-            });
-
-            $query->orderBy($productModel->getTable() . '.title');
+            $query->orderBy('translate_table.title');
         }
         else if (($cl = $this->closureQuery) instanceof \Closure)
         {
@@ -142,7 +135,6 @@ class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
 
         return view($this->getFrontendView(), [
                         'controller' => $this, 
-                        'frontendController' => $this->getFrontendController(),
                         'products' => $products,
                     ])->render();
 	}

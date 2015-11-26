@@ -13,12 +13,14 @@ class SeedShop extends Migration {
             \App\Telenok\Core\Model\System\Setting::where('code', 'app.acl.enabled')
                     ->update(['value' => 0]);
             
+            // Folder Shop
             $folderShop = (new \App\Telenok\Core\Model\System\Folder())->storeOrUpdate([
                 'title' => ['en' => 'Shop', 'ru' => 'Магазин'],
                 'active' => 1,
                 'code' => 'shop',
             ])->makeRoot();
             
+            // Object Profuct
             $typeProduct = (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
                 [
                     'title' => ['ru' => "Товар", 'en' => "Product"], 
@@ -30,8 +32,28 @@ class SeedShop extends Migration {
                 ]
             );
             
+            // Move to folder
             $typeProduct->makeLastChildOf($folderShop);
 
+            // Object Category Profuct
+            $shopCategory = (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
+                [
+                    'title' => ['ru' => "Категория товара", 'en' => "Product category"], 
+                    'title_list' => ['ru' => "Категория товара", 'en' => "Product category"],
+                    'code' => 'product_category',
+                    'active' => 1,
+                    'treeable' => 1,
+                    'class_model' => '\App\Telenok\Shop\Model\ProductCategory',
+                    'class_controller' => '\App\Telenok\Shop\Module\ProductCategory\Controller',
+                ]
+            );
+
+            // Move to folder
+            $shopCategory->makeLastChildOf($folderShop);
+
+            
+            
+            // Product fields
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
                 'title' => ['en' => 'Url', 'ru' => 'Url'],
                 'title_list' => ['en' => 'Url', 'ru' => 'Url'],
@@ -121,20 +143,7 @@ class SeedShop extends Migration {
             ]);
 
             
-            $shopCategory = (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
-                [
-                    'title' => ['ru' => "Категория товара", 'en' => "Product category"], 
-                    'title_list' => ['ru' => "Категория товара", 'en' => "Product category"],
-                    'code' => 'product_category',
-                    'active' => 1,
-                    'treeable' => 1,
-                    'class_model' => '\App\Telenok\Shop\Model\ProductCategory',
-                    'class_controller' => '\App\Telenok\Shop\Module\ProductCategory\Controller',
-                ]
-            );
-
-            $shopCategory->makeLastChildOf($folderShop);
-            
+            // Product category fields
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
                 'title' => ['en' => 'Url', 'ru' => 'Url'],
                 'title_list' => ['en' => 'Url', 'ru' => 'Url'],
@@ -223,6 +232,25 @@ class SeedShop extends Migration {
                 'allow_update' => 1,
                 'field_order' => 10,
             ]);
+            
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Category to show in', 'ru' => 'Показывать в категории'],
+                'title_list' => ['en' => 'Category to show in', 'ru' => 'Показывать в категории'],
+                'key' => 'relation-one-to-many',
+                'code' => 'product_show_in',
+                'active' => 1,
+                'field_object_type' => 'product_category',
+                'field_object_tab' => 'main',
+                'relation_one_to_many_has' => 'product',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 0,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 11,
+            ]);
+
             
             // Widget group
             (new \App\Telenok\Core\Model\Web\WidgetGroup())->storeOrUpdate([

@@ -32,7 +32,6 @@ class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
 
         return view($this->getFrontendView(), [
                     'controller' => $this, 
-                    'frontendController' => $this->getFrontendController(),
                     'category' => $category,
                 ])->render();
 	}
