@@ -38,7 +38,7 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 
         $this->page = $this->getRequest()->get('p', $this->page);
         $this->shopCategoryUrlPattern = app('router')->getCurrentRoute()->getParameter('shop_category_url_pattern');
-        
+
         return $this;
     }
 
@@ -82,7 +82,7 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
         $structure['order_by'] = array_get($structure, 'order_by');
 
         $input->put('structure', $structure);
-        
+
         return parent::preProcess($model, $type, $input);
     }
 
