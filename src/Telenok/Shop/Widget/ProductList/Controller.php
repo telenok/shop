@@ -72,11 +72,31 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
         return $this->shopCategoryUrlPattern;
     }
 
+    public function preProcess($model, $type, $input)
+    { 
+        $structure = $input->get('structure');
+
+        $structure['per_page'] = (int)array_get($structure, 'per_page');
+        $structure['category_ids'] = (array)array_get($structure, 'category_ids');
+        $structure['ignore_page'] = (bool)array_get($structure, 'ignore_page');
+        $structure['order_by'] = array_get($structure, 'order_by');
+
+        $input->put('structure', $structure);
+        
+        return parent::preProcess($model, $type, $input);
+    }
+
     public function getCacheKey()
 	{
         if ($key = parent::getCacheKey())
         {
-            return $key . $this->getCategoryIds() . $this->getPerPage() . $this->getPage() . $this->getIgnorePage();
+            return $key 
+                    . implode('', $this->getCategoryIds())
+                    . $this->getShopCategoryUrlPattern()
+                    . $this->getPerPage()
+                    . $this->getPage()
+                    . $this->getOrderBy()
+                    . $this->getIgnorePage();
         }
         else
         {
@@ -92,18 +112,16 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
         
         if ($catIds = $this->getCategoryIds())
         {
-            $ids = (array)json_decode('[' . $catIds . ']'); 
-
             $productCategoryModel = app('\App\Telenok\Shop\Model\ProductCategory');
 
             $categoryIds = $productCategoryModel->withPermission()
                     ->active()
-                    ->whereIn($productCategoryModel->getTable() . '.id', $ids)
+                    ->whereIn($productCategoryModel->getTable() . '.id', $catIds)
                     ->lists('id');
 
-            $query->whereHas('productProductCategory', function($query) use ($categoryIds)
+            $query->whereHas('productProductCategory', function($query) use ($productCategoryModel, $categoryIds)
             {
-                $query->whereIn('id', $categoryIds);
+                $query->whereIn($productCategoryModel->getTable() . '.id', $categoryIds);
             });
         }
         else if ($catUrl = $this->getShopCategoryUrlPattern())
@@ -120,13 +138,18 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 
             $query->orderBy('translate_table.title');
         }
-        else if (($cl = $this->closureQuery) instanceof \Closure)
+        else if ($orderBy == 'active_at')
         {
-            $cl($query, $this);
+            $query->orderBy($productModel->getTable() . '.active_at_start');
         }
         else
         {
             $query->orderBy($productModel->getTable() . '.' . $orderBy);
+        }
+        
+        if (($cl = $this->closureQuery) instanceof \Closure)
+        {
+            $cl($query, $this);
         }
 
         $products = $query->skip($this->getPage() * $this->getPerPage())

@@ -85,8 +85,28 @@ class SeedShop extends Migration {
                 'show_in_list' => 1,
                 'allow_search' => 1,
                 'allow_create' => 1,
+                'allow_sort' => 1,
                 'allow_update' => 1,
                 'field_order' => 4,
+            ]);
+
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Order in list', 'ru' => 'Порядок в списке'],
+                'title_list' => ['en' => 'Order in list', 'ru' => 'Порядок в списке'],
+                'key' => 'integer-unsigned',
+                'code' => 'sort',
+                'active' => 1,
+                'field_object_type' => 'product',
+                'field_object_tab' => 'main',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 0,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_sort' => 1,
+                'allow_update' => 1,
+                'integer_unsigned_default' => 100000000,
+                'field_order' => 5,
             ]);
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
