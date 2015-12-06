@@ -1,6 +1,6 @@
 <?php namespace Telenok\Shop\Widget\Product;
 
-class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
+class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 
     protected $key = 'product';
     protected $parent = 'shop';

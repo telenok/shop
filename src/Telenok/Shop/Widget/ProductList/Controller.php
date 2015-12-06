@@ -1,13 +1,13 @@
 <?php namespace Telenok\Shop\Widget\ProductList;
 
-class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
+class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 
     protected $key = 'product-list';
     protected $parent = 'shop';
 	protected $defaultFrontendView = "shop::widget.product-list.widget-frontend";
 
     protected $perPage = 30;
-    protected $categoryIds;
+    protected $categoryIds = [];
     protected $page = 0;
     protected $ignorePage = false;
     protected $orderBy = 'price';
@@ -23,14 +23,14 @@ class Controller extends \Telenok\Core\Interfaces\Widget\Controller {
             $structure = $m->structure;
 
             $this->perPage = array_get($structure, 'per_page', $this->perPage);
-            $this->category = array_get($structure, 'category_ids');
+            $this->categoryIds = (array)array_get($structure, 'category_ids');
             $this->ignorePage = (bool)array_get($structure, 'ignore_page', $this->ignorePage);
             $this->orderBy = array_get($structure, 'order_by', $this->orderBy);
         }
         else 
         {
             $this->perPage = $this->getConfig('per_page', $this->perPage);
-            $this->categoryIds = $this->getConfig('category_ids', $this->categoryIds);
+            $this->categoryIds = (array)$this->getConfig('category_ids', $this->categoryIds);
             $this->ignorePage = (bool)$this->getConfig('ignore_page', $this->ignorePage);
             $this->orderBy = $this->getConfig('order_by', $this->orderBy);
             $this->closureQuery = $this->getConfig('closure_query', $this->closureQuery);
