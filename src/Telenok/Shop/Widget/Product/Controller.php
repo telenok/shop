@@ -58,7 +58,7 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 
         return view($this->getFrontendView(), [
                 'controller' => $this, 
-                'shop' => $product,
+                'product' => $product,
             ])->render();
 	}
 
@@ -66,7 +66,7 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 	{
         if ($key = parent::getCacheKey($additional))
         {
-            return $key . ($this->shop ? $this->shop->getKey() : 0);
+            return $key . ($this->shopProductUrlId ?: 0);
         }
         else
         {

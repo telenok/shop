@@ -96,7 +96,7 @@ class SeedShop extends Migration {
                 'allow_create' => 1,
                 'allow_sort' => 1,
                 'allow_update' => 1,
-                'field_order' => 4,
+                'field_order' => 7,
             ]);
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
@@ -115,7 +115,7 @@ class SeedShop extends Migration {
                 'allow_sort' => 1,
                 'allow_update' => 1,
                 'integer_unsigned_default' => 100000000,
-                'field_order' => 5,
+                'field_order' => 8,
             ]);
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
@@ -132,7 +132,7 @@ class SeedShop extends Migration {
                 'allow_search' => 1,
                 'allow_create' => 1,
                 'allow_update' => 1,
-                'field_order' => 7,
+                'field_order' => 9,
                 'text_rte' => 1,
             ]);
 
@@ -150,7 +150,7 @@ class SeedShop extends Migration {
                 'allow_search' => 1,
                 'allow_create' => 1,
                 'allow_update' => 1,
-                'field_order' => 8,
+                'field_order' => 10,
                 'text_rte' => 1,
             ]);
 
@@ -168,14 +168,14 @@ class SeedShop extends Migration {
                 'allow_search' => 0,
                 'allow_create' => 1,
                 'allow_update' => 1,
-                'field_order' => 9,
+                'field_order' => 11,
             ]);
 
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
                 'title' => ['en' => 'Page meta title', 'ru' => 'Заголовок страницы в Meta'],
                 'title_list' => ['en' => 'Page meta title', 'ru' => 'Заголовок страницы в Meta'],
                 'key' => 'string',
-                'code' => 'page_meta_title',
+                'code' => 'title_ceo',
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'ceo',
@@ -192,7 +192,7 @@ class SeedShop extends Migration {
                 'title' => ['en' => 'Page meta keywords', 'ru' => 'Keywords страницы в Meta'],
                 'title_list' => ['en' => 'Page meta keywords', 'ru' => 'Keywords страницы в Meta'],
                 'key' => 'string',
-                'code' => 'page_meta_keywords',
+                'code' => 'keywords_ceo',
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'ceo',
@@ -209,7 +209,7 @@ class SeedShop extends Migration {
                 'title' => ['en' => 'Page meta description', 'ru' => 'Описание страницы в Meta'],
                 'title_list' => ['en' => 'Page meta description', 'ru' => 'Описание страницы в Meta'],
                 'key' => 'text',
-                'code' => 'page_meta_description',
+                'code' => 'description_ceo',
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'ceo',

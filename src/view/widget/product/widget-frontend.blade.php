@@ -2,7 +2,9 @@
 
 $controller->setCacheEnabled(false);
 
-$controllerRequest->setPageMetaTitle($product->translate('title'));
+$controllerRequest->setPageMetaTitle($product->translate('title_ceo'));
+$controllerRequest->setPageMetaDescription($product->translate('description_ceo'));
+$controllerRequest->setPageMetaKeywords($product->translate('keywords_ceo'));
 
 ?>
 
