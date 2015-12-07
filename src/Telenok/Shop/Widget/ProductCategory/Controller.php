@@ -19,15 +19,23 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
             $searchBy = app('router')->getCurrentRoute()->getParameter('shop_category_url_pattern');
         }
 
-        $this->shopCategory = \App\Telenok\Shop\Model\ProductCategory::active()
-                ->withPermission()
-                ->where(function($query) use ($searchBy)
+        $this->shopCategory = \Cache::remember(
+                $this->getCacheKey('shopCategory'), 
+                $this->getCacheTime(), 
+                function() use ($searchBy)
                 {
-                    $query->where('url_pattern', $searchBy);
-                    $query->orWhere('id', $searchBy);
-                })
-                ->active()
-                ->first();
+                    $categoryModel = app('\App\Telenok\Shop\Model\ProductCategory');
+
+                    return $categoryModel::active()
+                        ->withPermission()
+                        ->where(function($query) use ($categoryModel, $searchBy)
+                        {
+                            $query->where($categoryModel->getTable() . '.url_pattern', $searchBy);
+                            $query->orWhere($categoryModel->getTable() . '.id', $searchBy);
+                        })
+                        ->active()
+                        ->first();
+                });
 
         return $this;
     }
@@ -44,16 +52,16 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
     }
     
 	public function getNotCachedContent()
-	{
+	{        
         return view($this->getFrontendView(), [
                     'controller' => $this, 
                     'category' => $this->shopCategory,
                 ])->render();
 	}
 
-	public function getCacheKey()
+	public function getCacheKey($additional = '')
 	{
-        if ($key = parent::getCacheKey())
+        if ($key = parent::getCacheKey($additional))
         {
             return $key . ($this->shopCategory ? $this->shopCategory->getKey() : 0);
         }

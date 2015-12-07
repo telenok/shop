@@ -51,7 +51,16 @@ class SeedShop extends Migration {
             // Move to folder
             $shopCategory->makeLastChildOf($folderShop);
 
-            
+            // Product tab CEO
+            (new \App\Telenok\Core\Model\Object\Tab())->storeOrUpdate(
+                [
+                    'title' => ['en' => 'CEO', 'ru' => 'CEO'],
+                    'code' => 'ceo',
+                    'active' => 1,
+                    'tab_object_type' => 'product',
+                    'tab_order' => 4
+                ]
+            );
             
             // Product fields
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
@@ -162,6 +171,59 @@ class SeedShop extends Migration {
                 'field_order' => 9,
             ]);
 
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Page meta title', 'ru' => 'Заголовок страницы в Meta'],
+                'title_list' => ['en' => 'Page meta title', 'ru' => 'Заголовок страницы в Meta'],
+                'key' => 'string',
+                'code' => 'page_meta_title',
+                'active' => 1,
+                'field_object_type' => 'product',
+                'field_object_tab' => 'ceo',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 0,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 1,
+            ]);
+
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Page meta keywords', 'ru' => 'Keywords страницы в Meta'],
+                'title_list' => ['en' => 'Page meta keywords', 'ru' => 'Keywords страницы в Meta'],
+                'key' => 'string',
+                'code' => 'page_meta_keywords',
+                'active' => 1,
+                'field_object_type' => 'product',
+                'field_object_tab' => 'ceo',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 0,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 2,
+            ]);
+
+            (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([
+                'title' => ['en' => 'Page meta description', 'ru' => 'Описание страницы в Meta'],
+                'title_list' => ['en' => 'Page meta description', 'ru' => 'Описание страницы в Meta'],
+                'key' => 'text',
+                'code' => 'page_meta_description',
+                'active' => 1,
+                'field_object_type' => 'product',
+                'field_object_tab' => 'ceo',
+                'multilanguage' => 0,
+                'show_in_form' => 1,
+                'show_in_list' => 0,
+                'allow_search' => 1,
+                'allow_create' => 1,
+                'allow_update' => 1,
+                'field_order' => 3
+            ]);
+
+            
+            
             
             // Product category fields
             (new \App\Telenok\Core\Model\Object\Field())->storeOrUpdate([

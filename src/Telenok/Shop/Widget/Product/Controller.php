@@ -18,14 +18,20 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 
 	public function getNotCachedContent()
 	{
-        $model = app('\App\Telenok\Shop\Model\Product');
+        $product = \Cache::remember(
+                    $this->getCacheKey('shopProduct'), 
+                    $this->getCacheTime(), 
+                    function()
+                    {
+                        $model = app('\App\Telenok\Shop\Model\Product');
 
-        $product = $model
-                    ->active()
-                    ->with('productShowInProductCategory')
-                    ->withPermission()
-                    ->where($model->getTable() . '.url_pattern', $this->shopProductUrlPattern)
-                    ->first();
+                        return $model
+                            ->active()
+                            ->with('productShowInProductCategory')
+                            ->withPermission()
+                            ->where($model->getTable() . '.url_pattern', $this->shopProductUrlPattern)
+                            ->first();
+                    });
 
         return view($this->getFrontendView(), [
                         'controller' => $this, 

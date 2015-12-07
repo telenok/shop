@@ -1,3 +1,16 @@
+<?php
+
+$controller->setCacheEnabled(false);
+
+$controllerRequest->setPageMetaTitle($category->translate('title'));
+
+?>
+
+
+<?php echo \Cache::remember(
+        $controller->getCacheKey('content'), 
+        $controller->getCacheTime(), 
+        function() use ($products) { ?>
 
 @foreach($products as $product)
 
@@ -18,3 +31,4 @@
     <a href="catalog/{!! $categoryShowIn->url_pattern !!}/product/{!! $product->url_pattern !!}">{{$product->translate('title')}}</a>
 
 @endforeach
+<?php }); ?>

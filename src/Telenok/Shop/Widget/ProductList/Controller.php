@@ -86,13 +86,12 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
         return parent::preProcess($model, $type, $input);
     }
 
-    public function getCacheKey()
+	public function getCacheKey($additional = '')
 	{
-        if ($key = parent::getCacheKey())
+        if ($key = parent::getCacheKey($additional))
         {
             return $key 
                     . implode('', $this->getCategoryIds())
-                    . $this->getShopCategoryUrlPattern()
                     . $this->getPerPage()
                     . $this->getPage()
                     . $this->getOrderBy()
@@ -106,55 +105,61 @@ class Controller extends \App\Telenok\Core\Interfaces\Widget\Controller {
 
 	public function getNotCachedContent()
 	{
-        $productModel = app('\App\Telenok\Shop\Model\Product');
-        
-        $query = $productModel->withPermission()->with('productShowInProductCategory');
-        
-        if ($catIds = $this->getCategoryIds())
-        {
-            $productCategoryModel = app('\App\Telenok\Shop\Model\ProductCategory');
-
-            $categoryIds = $productCategoryModel->withPermission()
-                    ->active()
-                    ->whereIn($productCategoryModel->getTable() . '.id', $catIds)
-                    ->lists('id');
-
-            $query->whereHas('productProductCategory', function($query) use ($productCategoryModel, $categoryIds)
+        $products = \Cache::remember(
+            $this->getCacheKey('shopProductList'), 
+            $this->getCacheTime(), 
+            function()
             {
-                $query->whereIn($productCategoryModel->getTable() . '.id', $categoryIds);
-            });
-        }
-        else if ($catUrl = $this->getShopCategoryUrlPattern())
-        {
-            $query->whereHas('productProductCategory', function($query) use ($catUrl)
-            {
-                $query->where('url_pattern', $catUrl);
-            });
-        }
-        
-        if (($orderBy = $this->getOrderBy()) == 'title')
-        {
-            $query->translateField($query, $productModel->getTable(), 'translate_table', 'title', config('app.locale'));
+                $productModel = app('\App\Telenok\Shop\Model\Product');
 
-            $query->orderBy('translate_table.title');
-        }
-        else if ($orderBy == 'active_at')
-        {
-            $query->orderBy($productModel->getTable() . '.active_at_start');
-        }
-        else
-        {
-            $query->orderBy($productModel->getTable() . '.' . $orderBy);
-        }
-        
-        if (($cl = $this->closureQuery) instanceof \Closure)
-        {
-            $cl($query, $this);
-        }
+                $query = $productModel->withPermission()->with('productShowInProductCategory');
 
-        $products = $query->skip($this->getPage() * $this->getPerPage())
-                    ->take($this->getPerPage())
-                    ->get();
+                if ($catIds = $this->getCategoryIds())
+                {
+                    $productCategoryModel = app('\App\Telenok\Shop\Model\ProductCategory');
+
+                    $categoryIds = $productCategoryModel->withPermission()
+                            ->active()
+                            ->whereIn($productCategoryModel->getTable() . '.id', $catIds)
+                            ->lists('id');
+
+                    $query->whereHas('productProductCategory', function($query) use ($productCategoryModel, $categoryIds)
+                    {
+                        $query->whereIn($productCategoryModel->getTable() . '.id', $categoryIds);
+                    });
+                }
+                else if ($catUrl = $this->getShopCategoryUrlPattern())
+                {
+                    $query->whereHas('productProductCategory', function($query) use ($catUrl)
+                    {
+                        $query->where('url_pattern', $catUrl);
+                    });
+                }
+
+                if (($orderBy = $this->getOrderBy()) == 'title')
+                {
+                    $query->translateField($query, $productModel->getTable(), 'translate_table', 'title', config('app.locale'));
+
+                    $query->orderBy('translate_table.title');
+                }
+                else if ($orderBy == 'active_at')
+                {
+                    $query->orderBy($productModel->getTable() . '.active_at_start');
+                }
+                else
+                {
+                    $query->orderBy($productModel->getTable() . '.' . $orderBy);
+                }
+
+                if (($cl = $this->closureQuery) instanceof \Closure)
+                {
+                    $cl($query, $this);
+                }
+
+                return $query->skip($this->getPage() * $this->getPerPage())
+                            ->take($this->getPerPage())
+                            ->get();
+            });
 
         return view($this->getFrontendView(), [
                         'controller' => $this, 
