@@ -12,14 +12,14 @@ class SeedShop extends Migration {
             // Off permission validator
             \App\Telenok\Core\Model\System\Setting::where('code', 'app.acl.enabled')
                     ->update(['value' => 0]);
-            
+
             // Folder Shop
             $folderShop = (new \App\Telenok\Core\Model\System\Folder())->storeOrUpdate([
                 'title' => ['en' => 'Shop', 'ru' => 'Магазин'],
                 'active' => 1,
                 'code' => 'shop',
             ])->makeRoot();
-            
+
             // Object Profuct
             $typeProduct = (new \App\Telenok\Core\Model\Object\Type())->storeOrUpdate(
                 [
@@ -27,11 +27,12 @@ class SeedShop extends Migration {
                     'title_list' => ['ru' => "Товар", 'en' => "Product"],
                     'code' => 'product',
                     'active' => 1,
+                    'multilanguage' => 1,
                     'class_model' => '\App\Telenok\Shop\Model\Product',
                     'class_controller' => '\App\Telenok\Shop\Module\Product\Controller',
                 ]
             );
-            
+
             // Move to folder
             $typeProduct->makeLastChildOf($folderShop);
 
@@ -42,6 +43,7 @@ class SeedShop extends Migration {
                     'title_list' => ['ru' => "Категория товара", 'en' => "Product category"],
                     'code' => 'product_category',
                     'active' => 1,
+                    'multilanguage' => 1,
                     'treeable' => 1,
                     'class_model' => '\App\Telenok\Shop\Model\ProductCategory',
                     'class_controller' => '\App\Telenok\Shop\Module\ProductCategory\Controller',
@@ -126,7 +128,7 @@ class SeedShop extends Migration {
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'main',
-                'multilanguage' => 0,
+                'multilanguage' => 1,
                 'show_in_form' => 1,
                 'show_in_list' => 1,
                 'allow_search' => 1,
@@ -144,7 +146,7 @@ class SeedShop extends Migration {
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'main',
-                'multilanguage' => 0,
+                'multilanguage' => 1,
                 'show_in_form' => 1,
                 'show_in_list' => 1,
                 'allow_search' => 1,
@@ -179,7 +181,7 @@ class SeedShop extends Migration {
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'ceo',
-                'multilanguage' => 0,
+                'multilanguage' => 1,
                 'show_in_form' => 1,
                 'show_in_list' => 0,
                 'allow_search' => 1,
@@ -196,7 +198,7 @@ class SeedShop extends Migration {
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'ceo',
-                'multilanguage' => 0,
+                'multilanguage' => 1,
                 'show_in_form' => 1,
                 'show_in_list' => 0,
                 'allow_search' => 1,
@@ -213,7 +215,7 @@ class SeedShop extends Migration {
                 'active' => 1,
                 'field_object_type' => 'product',
                 'field_object_tab' => 'ceo',
-                'multilanguage' => 0,
+                'multilanguage' => 1,
                 'show_in_form' => 1,
                 'show_in_list' => 0,
                 'allow_search' => 1,
@@ -269,7 +271,7 @@ class SeedShop extends Migration {
                 'active' => 1,
                 'field_object_type' => 'product_category',
                 'field_object_tab' => 'main',
-                'multilanguage' => 0,
+                'multilanguage' => 1,
                 'show_in_form' => 1,
                 'show_in_list' => 1,
                 'allow_search' => 1,
@@ -287,7 +289,7 @@ class SeedShop extends Migration {
                 'active' => 1,
                 'field_object_type' => 'product_category',
                 'field_object_tab' => 'main',
-                'multilanguage' => 0,
+                'multilanguage' => 1,
                 'show_in_form' => 1,
                 'show_in_list' => 1,
                 'allow_search' => 1,
