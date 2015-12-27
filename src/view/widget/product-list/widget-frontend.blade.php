@@ -13,7 +13,7 @@
         <a href="catalog/{!! $categoryShowIn->url_pattern !!}/product/{!! $product->url_pattern !!}">
             <img src="{!! $image->upload->downloadImageLink(
                     380, 630,
-                    \App\Telenok\Core\Field\Upload\File::TODO_RESIZE_PROPORTION) !!}" 
+                    \App\Telenok\Core\Support\Image\Processing::TODO_RESIZE_PROPORTION) !!}" 
                     alt="{{ $image->translate('title') }}"
             />
         </a>
